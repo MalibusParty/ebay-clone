@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org" xmlns:xmls="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benutzer Registrieren</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <div class="registry-container">
+        <div id="header">
+            <p th:text="#{registeruser.titel}">Benutzer registrieren</p>
+            <a th:href="@{?sprache=de}">DE</a>
+            <a th:href="@{?sprache=en}">EN</a>
+            <a th:href="@{?sprache=nl}">NL</a>
+        </div>
+        <h1 th:text="#{registeruser.ihredaten}">Ihre Registrierung</h1>
+        <form th:method="POST" th:action="@{/registrieren}" th:object="${user}">
+            <label for="username" th:text="#{registeruser.username}"></label><br>
+            <input type="text" name="username" id="username" th:field="*{username}" th:errorclass="validation-error"><br>
+            <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}">Username entspricht nicht Vorgaben</p>
+            <label for="password" th:text="#{registeruser.password}"></label><br>
+            <input type="password" name="password" id="password" th:field="*{password}" th:errorclass="validation-error"><br>
+            <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}">Passwort entspricht nicht Vorgaben</p>
+            <div class="flex-container-btns">
+                <button type="submit" id="submit-btn" th:text="#{registeruser.speichern}">Speichern</button>
+                <a id="cancel-btn" href="/benutzerprofil" th:text="#{registeruser.abbrechen}">Abbrechen</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

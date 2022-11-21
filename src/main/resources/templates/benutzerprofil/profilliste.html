@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org" xmlns:xmls="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilliste</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <div class="profil-container">
+        <div id="header">
+            <p th:text="#{profilliste.titel}">Benutzerprofil-Liste</p>
+            <a th:href="@{?sprache=de}">DE</a>
+            <a th:href="@{?sprache=en}">EN</a>
+            <a th:href="@{?sprache=nl}">NL</a>
+        </div>
+    </div>
+    <div id="user-list">
+        <table id="users-table">
+            <tr>
+                <th th:text="#{profilliste.tab.name}">Name</th>
+                <th th:text="#{profilliste.tab.geburtsdatum}">Geb.</th>
+                <th th:text="#{profilliste.tab.email}">EPost</th>
+                <th th:text="#{profilliste.tab.adresse}">aus</th>
+                <th th:text="#{profilliste.tab.loeschen}">löschen</th>
+            </tr>
+            <tr th:each="p: ${profilliste}">
+                <td><a th:href="@{/benutzerprofil/liste(op='bearbeiten', id=${p.id})}" th:text="${p.name}">name</a></td>
+                <td th:text="${p.geburtsdatum}">geb</td>
+                <td th:text="${p.email}">email</td>
+                <td th:text="${p.adresse}">adresse</td>
+                <td><a id="del-btn" th:href="@{/benutzerprofil/liste(op='loeschen', id=${p.id})}">X</a></td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org" xmlns:xmls="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilansicht</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <div class="profil-container">
+        <div id="header">
+            <p th:text="#{profilansicht.titel}">Benutzerprofil</p>
+            <a th:href="@{?sprache=de}">DE</a>
+            <a th:href="@{?sprache=en}">EN</a>
+            <a th:href="@{?sprache=nl}">NL</a>
+            <a href="/benutzerprofil/clearsession" th:text="#{profilansicht.endsession}">End Session</a>
+            <a href="/logout" th:text="#{profil.logout}">Logout</a>
+        </div>
+        <div id="user-info-div">
+            <p id="data" th:text="#{profil.ihredaten}">Ihre Daten</p>
+            <div class="grid-items-infos">
+                <p class="inner-flex-item" th:text="#{profil.name}">Name</p>
+                <p class="inner-flex-item" th:text="${name}">Name des Benutzers</p>
+            </div>
+            <div class="grid-items-infos">
+                <p class="inner-flex-item" th:text="#{profil.geburtsdatum}">Geb.</p>
+                <p class="inner-flex-item" th:text="${geburtsdatum}">Geburtstag des Benutzers</p>
+            </div>
+            <div class="grid-items-infos">
+                <p class="inner-flex-item" th:text="#{profil.adresse}">Adresse</p>
+                <p class="inner-flex-item" th:text="${adresse}">Adresse des Benutzers</p>
+            </div>
+            <div class="grid-items-infos">
+                <p class="inner-flex-item" th:text="#{profil.email}">eMail</p>
+                <p class="inner-flex-item" th:text="${email}">eMail des Benutzers</p>
+            </div>
+            <div class="grid-items-infos">
+                <p class="inner-flex-item" th:text="#{profil.lieblingsfarbe}">Lieblingsfarbe</p>
+                <p class="inner-flex-item1" th:text="${lieblingsfarbe}">Lieblingsfarbe des Benutzers</p>
+                <p class="inner-flex-item2" th:style="|color: ${lieblingsfarbe}|">Dies ist ein Beispiel Text</p>
+            </div>
+        </div>
+        <div id="user-interest-box">
+            <p id="interest" th:text="#{profil.interessen}">Interessen</p>
+            <table>
+                <tr th:each="ele,status : ${interessenListe}">
+                    <td th:text="|${status.count}. ${ele}|">Interessen</td>
+                </tr>
+            </table>
+        </div>
+        <div class="flex-profil-btns">
+            <a id="bearbeiten-btn" href="/benutzerprofil/bearbeiten" th:text="#{profil.bearbeiten}">Bearbeiten</a>
+            <a id="ort-btn" th:with="latitude=${profil.lat}, longitude=${profil.lon}" th:href="@{|https://www.openstreetmap.org/#map=17/${latitude}/${longitude}|}" th:if="${latitude!=0.0}" target="_blank" th:text="#{profil.meinstandort}">Mein Standort</a>
+        </div>
+        <div id="angebots-lst" th:if="${profil.id!=0}">
+            <p id="offers" th:text="#{angebotsliste.titel}">Ihre Angebote</p>
+            <table>
+                <tr>
+                    <th th:text="#{angebot.editor.beschreibung}">Beschreibung</th>
+                    <th th:text="#{angebot.editor.mindestpreis}">Mindestpreis</th>
+                    <th th:text="#{angebot.editor.ablaufzeitpunkt}">Angebotsende</th>
+                </tr>
+                <tr th:each="a: ${profil.angebote}">
+                    <td><a th:with="latitude=${a.lat}, longitude=${a.lon}" th:href="@{|https://www.openstreetmap.org/#map=17/${latitude}/${longitude}|}" target="_blank" th:text="${a.beschreibung}">beschreibung</a></td>
+                    <td th:text="${a.mindestpreis}">minPreis</td>
+                    <td th:text="${a.ablaufzeitpunkt}">angEnd</td>
+                    <td><a id="del-btn" th:href="@{|/benutzerprofil/angebot/${a.id}/del|}">X</a></td>
+                </tr>
+            </table>
+            <div class="flex-profil-btns">
+                <a id="new-offer-btn" th:href="@{/benutzerprofil/angebot}" th:text="#{profil.angebote.anlegen}">Angebot einstellen</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

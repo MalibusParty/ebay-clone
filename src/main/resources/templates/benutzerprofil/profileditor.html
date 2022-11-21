@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org" xmlns:xmls="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profileditor</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <div class="profil-container">
+        <div id="header">
+            <p th:text="#{profilbearbeiten.titel}">Benutzerprofil bearbeiten</p>
+            <a th:href="@{?sprache=de}">DE</a>
+            <a th:href="@{?sprache=en}">EN</a>
+            <a th:href="@{?sprache=nl}">NL</a>
+        </div>
+        <form th:method="POST" th:action="@{/benutzerprofil/bearbeiten}" th:object="${profil}">
+            <label for="name" th:text="#{profil.name}">Name</label><br>
+            <input type="text" name="name" id="name" th:field="*{name}" th:errorclass="validation-error"><br>
+            <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}">Name falsch</p>
+            <label for="geburtsdatum" th:text="#{profil.geburtsdatum}">Geburtstag</label><br>
+            <input type="date" id="geburtsdatum" th:field="*{geburtsdatum}" th:errorclass="validation-error"><br>
+            <p th:if="${#fields.hasErrors('geburtsdatum')}" th:errorclass="error" th:errors="*{geburtsdatum}">Geburtstag falsch</p>
+            <label for="adresse" th:text="#{profil.adresse}">Adresse</label><br>
+            <input type="text" id="adresse" th:field="*{adresse}" th:errorclass="validation-error"><br>
+            <p th:if="${#fields.hasErrors('adresse')}" th:errorclass="error" th:errors="*{adresse}">Adresse falsch</p>
+            <label for="email" th:text="#{profil.email}">E-Mail</label><br>
+            <input type="text" id="email" th:field="*{email}" th:errorclass="validation-error"><br>
+            <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}">E-Mail falsch</p>
+            <label for="lieblingsfarbe" th:text="#{profil.lieblingsfarbe}">Lieblingsfarbe</label><br>
+            <input type="color" id="lieblingsfarbe" th:field="*{lieblingsfarbe}" th:errorclass="validation-error"><br>
+            <p th:if="${#fields.hasErrors('lieblingsfarbe')}" th:errorclass="error" th:errors="*{lieblingsfarbe}">Lieblingsfarbe falsch</p>
+            <label for="interessen" th:text="#{profilbearbeiten.interessen}">Interessen</label><br>
+            <input type="text" id="interessen" th:field="*{interessen}" th:errorclass="validation-error"><br>
+            <p th:if="${#fields.hasErrors('interessen')}" th:errorclass="error" th:errors="*{interessen}">Interessen falsch</p>
+            <div class="flex-container-btns">
+                <button type="submit" id="submit-btn" th:text="#{profil.speichern}">Speichern</button>
+                <a id="cancel-btn" href="/benutzerprofil" th:text="#{profil.abbrechen}">Abbrechen</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
